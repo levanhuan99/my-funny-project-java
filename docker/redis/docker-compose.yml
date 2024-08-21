@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  redis-node-1:
+    image: redis:7.0
+    command: redis-server --port 6379 --requirepass 1 --masterauth 1 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes
+    networks:
+      - redis-cluster
+    ports:
+      - "6379:6379"
+    volumes:
+      - /Users/lehuan/Desktop/my-project/docker/redis/node-1:/data
+
+  redis-node-2:
+    image: redis:7.0
+    command: redis-server --port 6379 --requirepass 1 --masterauth 1 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes
+    networks:
+      - redis-cluster
+    ports:
+      - "6380:6379"
+    volumes:
+      - /Users/lehuan/Desktop/my-project/docker/redis/node-2:/data
+
+  redis-node-3:
+    image: redis:7.0
+    command: redis-server --port 6379 --requirepass 1 --masterauth 1 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes
+    networks:
+      - redis-cluster
+    ports:
+      - "6381:6379"
+    volumes:
+      - /Users/lehuan/Desktop/my-project/docker/redis/node-3:/data
+
+  redis-node-4:
+    image: redis:7.0
+    command: redis-server --port 6379 --requirepass 1 --masterauth 1 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes
+    networks:
+      - redis-cluster
+    ports:
+      - "6382:6379"
+    volumes:
+      - /Users/lehuan/Desktop/my-project/docker/redis/node-4:/data
+
+  redis-node-5:
+    image: redis:7.0
+    command: redis-server --port 6379 --requirepass 1 --masterauth 1 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes
+    networks:
+      - redis-cluster
+    ports:
+      - "6383:6379"
+    volumes:
+      - /Users/lehuan/Desktop/my-project/docker/redis/node-5:/data
+
+  redis-node-6:
+    image: redis:7.0
+    command: redis-server --port 6379 --requirepass 1 --masterauth 1 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes
+    networks:
+      - redis-cluster
+    ports:
+      - "6384:6379"
+    volumes:
+      - /Users/lehuan/Desktop/my-project/docker/redis/node-6:/data
+
+networks:
+  redis-cluster:
+    driver: bridge
+

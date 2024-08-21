@@ -1,0 +1,7 @@
+## step to start to redis cluster by using docker-compose
+#1. download this docker-compose.yml
+#2. replace your folder store data. my folder is /User/lehuan/... . All you need to do is replace your folder path
+#3. running docker compose: docker-compose up -d
+#4. access to redis container using command: docker exec -it redis-redis-node-1-1 /bin/sh
+#5.create cluster mode: nohup redis-cli --cluster create redis-node-1:6379 redis-node-2:6379 redis-node-3:6379 redis-node-4:6379 redis-node-5:6379 redis-node-6:6379 --cluster-replicas 1 -a 1 > cluster_creation.log 2>&1 &
+#6. all done. start your own ^.^
