@@ -1,4 +1,4 @@
-package it.must.be.funny.creational;
+package it.must.be.funny.creational.singleton;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,6 +10,7 @@ public class DatabaseConnection {
     private  String password = "";
 
     private static DatabaseConnection databaseConnection;
+
     private Connection connection;
 
     private DatabaseConnection() throws SQLException {
