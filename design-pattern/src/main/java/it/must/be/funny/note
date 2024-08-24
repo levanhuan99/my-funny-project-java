@@ -1,0 +1,50 @@
+1. Creational Patterns (Mẫu thiết kế tạo dựng)
+ - Nhóm này tập trung vào việc tạo ra các đối tượng, đảm bảo rằng quá trình này linh hoạt và hiệu quả.
+    + Singleton: Đảm bảo rằng một lớp chỉ có một thể hiện duy nhất và cung cấp một điểm
+        truy cập toàn cục cho thể hiện này.
+    + Factory Method: Cung cấp một giao diện để tạo đối tượng, nhưng để các lớp con quyết định lớp nào sẽ được khởi tạo.
+    + Abstract Factory: Cung cấp một giao diện để tạo ra các họ sản phẩm liên quan hoặc phụ thuộc lẫn nhau mà không chỉ
+        rõ lớp cụ thể nào sẽ được khởi tạo.
+    + Builder: Tách quá trình xây dựng một đối tượng phức tạp ra khỏi việc biểu diễn nó,
+        cho phép cùng một quá trình xây dựng có thể tạo ra các biểu diễn khác nhau.
+    + Prototype: Cho phép sao chép các đối tượng hiện có thay vì tạo mới hoàn toàn, giúp tiết kiệm chi phí.
+
+2. Structural Patterns (Mẫu thiết kế cấu trúc)
+ - Nhóm này tập trung vào cách thức tổ chức và cấu trúc các lớp và đối tượng để tạo ra các hệ thống lớn hơn.
+    + Adapter: Cho phép các lớp với giao diện không tương thích có thể làm việc cùng nhau bằng cách biến đổi
+        giao diện của một lớp thành một giao diện khác mà client mong đợi.
+    + Bridge: Tách biệt một đối tượng ra khỏi cách nó được hiện thực, cho phép chúng biến đổi độc lập.
+    + Composite: Tổ chức các đối tượng theo dạng cây để thể hiện hệ thống phân cấp “phần-tổng thể” (part-whole),
+        cho phép các đối tượng riêng lẻ và các nhóm đối tượng được xử lý thống nhất.
+    + Decorator: Cho phép thêm các tính năng mới vào một đối tượng hiện có một cách linh hoạt mà không làm thay đổi
+        cấu trúc của nó.
+    + Facade: Cung cấp một giao diện đơn giản hơn cho một hệ thống phức tạp, làm giảm sự phức tạp của hệ thống.
+    + Flyweight: Tối ưu hóa việc sử dụng tài nguyên bằng cách chia sẻ nhiều đối tượng nhỏ mà giống nhau,
+        để tiết kiệm bộ nhớ.
+    + Proxy: Cung cấp một đối tượng đại diện hoặc trình bao bọc để kiểm soát truy cập đến đối tượng thực.
+
+3. Behavioral Patterns (Mẫu thiết kế hành vi)
+ - Nhóm này tập trung vào cách thức mà các đối tượng tương tác với nhau và cách thức quản lý luồng điều khiển
+    trong các hệ thống phức tạp.
+    + Chain of Responsibility: Cho phép gửi yêu cầu qua một chuỗi các đối tượng, nơi mỗi đối tượng có thể xử lý
+        yêu cầu hoặc truyền nó cho đối tượng tiếp theo trong chuỗi.
+    + Command: Biến các yêu cầu thành các đối tượng, cho phép lưu trữ và thực thi chúng sau, hoặc hỗ trợ undo/redo.
+    + Interpreter: Cung cấp một cách để diễn giải ngữ pháp của một ngôn ngữ cụ thể bằng cách định nghĩa
+        một lớp cho mỗi ký hiệu của ngôn ngữ đó.
+    + Iterator: Cung cấp một cách tuần tự để duyệt qua các phần tử trong một tập hợp mà không cần tiết lộ
+        cấu trúc bên trong của nó.
+    + Mediator: Giảm sự phức tạp của giao tiếp giữa các đối tượng bằng cách giới thiệu một đối tượng trung gian
+        (mediator) để điều phối tương tác.
+    + Memento: Lưu trữ trạng thái bên trong của một đối tượng để có thể khôi phục lại sau mà không phá vỡ
+        tính đóng gói.
+    + Observer: Định nghĩa mối quan hệ một-nhiều giữa các đối tượng sao cho khi một đối tượng thay đổi trạng thái,
+        tất cả các đối tượng phụ thuộc sẽ được thông báo và tự động cập nhật.
+    + State: Cho phép một đối tượng thay đổi hành vi của nó khi trạng thái nội bộ thay đổi,
+        như thể đối tượng thay đổi lớp của nó.
+    + Strategy: Định nghĩa một họ các thuật toán, gói chúng lại và làm cho chúng có thể hoán đổi cho nhau,
+        để có thể thay đổi thuật toán mà không ảnh hưởng đến client.
+    + Template Method: Định nghĩa khung của một thuật toán trong một phương thức, với các bước cụ thể
+        được thực hiện trong các phương thức con, cho phép lớp con ghi đè các bước nhất định
+        mà không thay đổi cấu trúc của thuật toán.
+    + Visitor: Cho phép định nghĩa một thao tác mới trên các phần tử của một cấu trúc đối tượng mà không cần
+        thay đổi lớp của các phần tử đó.
