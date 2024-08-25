@@ -15,7 +15,6 @@ public abstract class DatabaseFactory {
             case "mysql":
                 return new MysqlDatabaseFactory();
         }
-//        Database database = createDatabase(url,username, password);
-//        return database.getConnection(url, username, password);
+        return null;
     }
 }

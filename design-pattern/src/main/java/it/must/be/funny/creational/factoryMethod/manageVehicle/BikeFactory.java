@@ -1,4 +1,4 @@
-package it.must.be.funny.creational.factoryMethod;
+package it.must.be.funny.creational.factoryMethod.manageVehicle;
 
 public class BikeFactory extends VehicleFactory{
     @Override
