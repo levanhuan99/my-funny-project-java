@@ -59,6 +59,7 @@ public class House {
     }
 
     //builder class
+    // use builder class to create house object if house object has some fields optional
     public static class  HouseBuilder {
         //required
         private int floors;
@@ -68,6 +69,8 @@ public class House {
         private boolean hasGarage;
         private Integer member;
 
+        private House house;
+
         public HouseBuilder(int floors, String houseType){
             this.floors = floors;
             this.houseType = houseType;
@@ -76,12 +79,21 @@ public class House {
             this.hasGarage = hasGarage;
             return this;
         }
+
         public HouseBuilder setMember(Integer member){
             this.member = member;
+            if (this.house != null){
+                this.house = new House(this);
+            }
             return this;
         }
         public House build(){
-            return new House(this);
+            this.house = new House(this);
+            return this.house;
+        }
+
+        public House getHouse() {
+            return this.house;
         }
     }
 
