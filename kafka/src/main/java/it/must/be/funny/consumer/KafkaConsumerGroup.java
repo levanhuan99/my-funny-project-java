@@ -1,11 +1,10 @@
 package it.must.be.funny.consumer;
 
-import it.must.be.funny.config.ConsumerConfigs;
+import it.must.be.funny.config.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 import java.util.Collections;
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -15,7 +14,7 @@ public class KafkaConsumerGroup<K, V> {
     private final ExecutorService executorService;
 
     public KafkaConsumerGroup(KafkaMessageProcessor<K, V> messageProcessor, int threadPoolSize,String bootstrapServer, String groupId) {
-        this.consumer = new KafkaConsumer<>(ConsumerConfigs.getProperties(bootstrapServer,groupId));
+        this.consumer = new KafkaConsumer<>(ConsumerConfig.getProperties(bootstrapServer,groupId));
         this.messageProcessor = messageProcessor;
         this.executorService = Executors.newFixedThreadPool(threadPoolSize);
     }
@@ -39,12 +38,11 @@ public class KafkaConsumerGroup<K, V> {
 
         try {
             while (true) {
-                var records = consumer.poll(100); // Adjust polling interval as needed
+                var records = consumer.poll(100);
+//                executorServiceMonitor.submit(messageProcessor :: monitor);
                 for (ConsumerRecord<K, V> record : records) {
                     executorService.submit(
-                            () -> messageProcessor.process(record)
-                            // () -> todo add monitoring here
-                    );
+                            () -> messageProcessor.process(record));
                 }
                 consumer.commitSync();
             }

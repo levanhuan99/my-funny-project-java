@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <!-- Appender cho log tổng hợp -->
+        <RollingFile name="FileAppenderAll" fileName="logs/full.log" filePattern="logs/full-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="7"/>
+        </RollingFile>
+
+        <!-- Appender cho log level ERROR -->
+        <RollingFile name="FileAppenderError" fileName="logs/error.log" filePattern="logs/error-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="7"/>
+        </RollingFile>
+
+        <!-- Appender cho log level WARN -->
+        <RollingFile name="FileAppenderWarn" fileName="logs/warn.log" filePattern="logs/warn-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="7"/>
+        </RollingFile>
+
+        <!-- Appender cho log level INFO -->
+        <RollingFile name="FileAppenderInfo" fileName="logs/info.log" filePattern="logs/info-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="7"/>
+        </RollingFile>
+
+        <!-- Appender cho log level TRACE -->
+        <RollingFile name="FileAppenderTrace" fileName="logs/trace.log" filePattern="logs/trace-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="7"/>
+        </RollingFile>
+
+        <!-- Appender cho log level DEBUG -->
+        <RollingFile name="FileAppenderDebug" fileName="logs/debug.log" filePattern="logs/debug-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="7"/>
+        </RollingFile>
+
+        <Console name="ConsoleAppender">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <!-- Logger cho log tổng hợp -->
+        <Root  level="info">
+            <AppenderRef level="trace" ref="FileAppenderAll"/>
+            <AppenderRef level="info" ref="ConsoleAppender"/>
+<!--            <AppenderRef ref="FileAppenderError"/>-->
+<!--            <AppenderRef ref="FileAppenderWarn"/>-->
+            <AppenderRef  level="info" ref="FileAppenderInfo"/>
+<!--            <AppenderRef ref="FileAppenderTrace"/>-->
+<!--            <AppenderRef ref="FileAppenderDebug"/>-->
+        </Root>
+        <!-- Logger cho log ERROR -->
+        <Logger name="com.error" level="error" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="FileAppenderError"/>
+        </Logger>
+
+        <!-- Logger cho log WARN -->
+        <Logger name="com.warn" level="warn" additivity="false">
+            <AppenderRef ref="FileAppenderWarn"/>
+            <AppenderRef ref="ConsoleAppender"/>
+        </Logger>
+
+        <!-- Logger cho log INFO -->
+        <Logger name="com.info" level="info" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="FileAppenderInfo"/>
+        </Logger>
+
+        <!-- Logger cho log TRACE -->
+        <Logger name="com.trace" level="trace" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="FileAppenderTrace"/>
+        </Logger>
+
+        <!-- Logger cho log DEBUG -->
+        <Logger name="com.debug" level="debug" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="FileAppenderDebug"/>
+        </Logger>
+    </Loggers>
+</Configuration>

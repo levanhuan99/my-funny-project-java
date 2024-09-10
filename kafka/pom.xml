@@ -24,6 +24,19 @@
             <version>3.7.0</version>
         </dependency>
 
+        <!--SnakeYAML for config management-->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>2.0</version> <!-- Bạn có thể kiểm tra phiên bản mới nhất -->
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java -->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.25.3</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -38,6 +51,43 @@
                 </configuration>
             </plugin>
 
+            <!-- Plugin để tạo file JAR chứa bytecode -->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-jar-plugin</artifactId>-->
+<!--                <version>3.2.0</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>default-jar</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>jar</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <outputDirectory>./build-output/dist</outputDirectory>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+            <!-- Plugin để tạo file JAR chứa bytecode và đổi tên theo phiên bản -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>default-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${project.artifactId}-${project.version}-${maven.build.timestamp}</finalName>
+                            <outputDirectory>./build-output/dist</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Plugin để sao chép các dependency -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -51,30 +101,13 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <outputDirectory>./build-output/lib</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
 
-<!--            &lt;!&ndash; Plugin để đóng gói JAR &ndash;&gt;-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-jar-plugin</artifactId>-->
-<!--                <version>3.1.0</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <goals>-->
-<!--                            <goal>jar</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--                <configuration>-->
-<!--                    <finalName>${project.artifactId}-${project.version}</finalName>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-
-            <!-- Plugin để sao chép các tệp cấu hình -->
+            <!-- Plugin để sao chép các file cấu hình -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -87,7 +120,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/config</outputDirectory>
+                            <outputDirectory>./build-output/config</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>src/main/resources</directory>
@@ -100,6 +133,40 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- Plugin khi chạy maven clean, xóa thu mục build-output-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>build-output</directory> <!-- Thư mục cần xóa -->
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+            <!-- Plugin để biên dịch file .proto thành Java -->
+            <plugin>
+                <groupId>org.xolstice.maven.plugins</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+                <version>0.6.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>compile-custom</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- Đường dẫn tới thư mục chứa file .proto -->
+                    <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
+                    <!-- Đường dẫn để xuất các file .java -->
+                    <outputDirectory>${project.basedir}/src/main/java/it/must/be/funny/protobuf</outputDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>

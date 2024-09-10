@@ -3,6 +3,8 @@ package it.must.be.funny;
 
 import it.must.be.funny.consumer.KafkaConsumerGroup;
 import it.must.be.funny.consumer.KafkaMessageProcessor;
+import it.must.be.funny.service.ChainRule;
+import it.must.be.funny.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,11 +14,15 @@ public class KafkaMain {
     private static final Logger logger = LoggerFactory.getLogger(KafkaMain.class);
 
     public static void main(String[] args) {
-        // Implement the KafkaMessageProcessor
+        MessageService messageService = new MessageService();
+        ChainRule chainRule = ChainRule.getInstance();
+
+        // Add your message processing logic here
         KafkaMessageProcessor<String, String> processor = record -> {
-            System.out.printf("Processing record with key %s and value %s%n", record.key(), record.value());
-            // Add your message processing logic here
+            messageService.processMessage(record, chainRule);
+
         };
+
 
         // Create and start the KafkaConsumerClient
         String boostrapServer = "localhost:9092";
@@ -24,5 +30,5 @@ public class KafkaMain {
         KafkaConsumerGroup<String, String> kafkaConsumerClient = new KafkaConsumerGroup<>(processor, 10,boostrapServer,groupId);
         kafkaConsumerClient.start("first_topic");
 
-    }
+        }
 }

@@ -21,7 +21,7 @@ done
 # Xuất biến môi trường (nếu cần)
 export CONFIG_DIR
 
-# Cấu hình heap memory và stack memory
+# Cấu hình heap memory
 HEAP_SIZE="3G"
 
 # Đường dẫn đến tệp ghi PID
