@@ -1,6 +1,6 @@
 package it.must.be.funny.model;
 
-public class SnakeYml {
+public class ConfigProperties {
     private KafkaConfigProperties kafkaConfigProperties;
 
     public KafkaConfigProperties getKafkaConfigProperties() {

@@ -47,4 +47,14 @@ public class KafkaConfigProperties {
     public void setThreadPoolSize(int threadPoolSize) {
         this.threadPoolSize = threadPoolSize;
     }
+
+    @Override
+    public String toString() {
+        return "KafkaConfigProperties{" +
+                "groupId='" + groupId + '\'' +
+                ", topicName='" + topicName + '\'' +
+                ", bootstrapServer='" + bootstrapServer + '\'' +
+                ", threadPoolSize=" + threadPoolSize +
+                '}';
+    }
 }

@@ -1,8 +1,11 @@
 package it.must.be.funny;
 
 
+import it.must.be.funny.config.SnakeYmlConfigLoader;
 import it.must.be.funny.consumer.KafkaConsumerGroup;
 import it.must.be.funny.consumer.KafkaMessageProcessor;
+import it.must.be.funny.model.ConfigProperties;
+import it.must.be.funny.model.KafkaConfigProperties;
 import it.must.be.funny.service.ChainRule;
 import it.must.be.funny.service.MessageService;
 import org.slf4j.Logger;
@@ -14,6 +17,7 @@ public class KafkaMain {
     private static final Logger logger = LoggerFactory.getLogger(KafkaMain.class);
 
     public static void main(String[] args) {
+        ConfigProperties configProperties = SnakeYmlConfigLoader.loadConfig();
         MessageService messageService = new MessageService();
         ChainRule chainRule = ChainRule.getInstance();
 
@@ -25,10 +29,12 @@ public class KafkaMain {
 
 
         // Create and start the KafkaConsumerClient
-        String boostrapServer = "localhost:9092";
-        String groupId = "group_test";
-        KafkaConsumerGroup<String, String> kafkaConsumerClient = new KafkaConsumerGroup<>(processor, 10,boostrapServer,groupId);
-        kafkaConsumerClient.start("first_topic");
+        KafkaConsumerGroup<String, String> kafkaConsumerClient = new KafkaConsumerGroup<>(processor,
+                configProperties.getKafkaConfigProperties().getThreadPoolSize(),
+                configProperties.getKafkaConfigProperties().getBootstrapServer(),
+                configProperties.getKafkaConfigProperties().getGroupId());
+
+        kafkaConsumerClient.start(configProperties.getKafkaConfigProperties().getTopicName());
 
         }
 }
