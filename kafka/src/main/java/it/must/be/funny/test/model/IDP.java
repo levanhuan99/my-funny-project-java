@@ -26,6 +26,9 @@ public class IDP {
                 '}';
     }
 
+    public String formatIDP(){
+        return String.join("|",this.callId, this.caller, this.callee,String.valueOf(this.timestamp));
+    }
     public String getCallId() {
         return callId;
     }

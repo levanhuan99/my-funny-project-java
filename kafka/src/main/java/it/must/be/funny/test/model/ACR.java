@@ -21,4 +21,11 @@ public class ACR {
                 ", timestamp=" + timestamp +
                 '}';
     }
+    public String formatACR(){
+        return String.join("|",this.callId,String.valueOf(this.charge), String.valueOf(this.timestamp));
+    }
+
+    public String getCallId() {
+        return callId;
+    }
 }

@@ -21,4 +21,11 @@ public class RC {
                 ", timestamp=" + timestamp +
                 '}';
     }
+    public String formatRC(){
+        return String.join("|",this.callId, this.reason, String.valueOf(this.timestamp));
+    }
+
+    public String getCallId() {
+        return callId;
+    }
 }

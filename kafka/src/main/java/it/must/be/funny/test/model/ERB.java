@@ -21,4 +21,11 @@ public class ERB {
                 ", timestamp=" + timestamp +
                 '}';
     }
+    public String formatERB(){
+        return String.join("|",this.callId, this.event, String.valueOf(this.timestamp));
+    }
+
+    public String getCallId() {
+        return callId;
+    }
 }
