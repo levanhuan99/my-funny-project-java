@@ -15,6 +15,9 @@
         <maven.compiler.source>20</maven.compiler.source>
         <maven.compiler.target>20</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <deps.protobuf.version>3.11.4</deps.protobuf.version>
+        <deps.codehaus.version>3.2.0</deps.codehaus.version>
+        <protocCommand>protoc</protocCommand>
     </properties>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
@@ -37,6 +40,13 @@
             <version>3.25.3</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <version>3.1.8</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -51,24 +61,6 @@
                 </configuration>
             </plugin>
 
-            <!-- Plugin để tạo file JAR chứa bytecode -->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-jar-plugin</artifactId>-->
-<!--                <version>3.2.0</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>default-jar</id>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>jar</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <outputDirectory>./build-output/dist</outputDirectory>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
             <!-- Plugin để tạo file JAR chứa bytecode và đổi tên theo phiên bản -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -148,25 +140,57 @@
                 </configuration>
             </plugin>
 
-            <!-- Plugin để biên dịch file .proto thành Java -->
             <plugin>
-                <groupId>org.xolstice.maven.plugins</groupId>
-                <artifactId>protobuf-maven-plugin</artifactId>
-                <version>0.6.1</version>
+                <groupId>com.github.os72</groupId>
+                <artifactId>protoc-jar-maven-plugin</artifactId>
+                <version>3.11.4</version>
+<!--                <configuration>-->
+<!--                    <protocArtifact>com.google.protobuf:protoc:3.21.1</protocArtifact>-->
+<!--                </configuration>-->
+
                 <executions>
                     <execution>
+                        <phase>generate-sources</phase>
                         <goals>
-                            <goal>compile</goal>
-                            <goal>compile-custom</goal>
+                            <goal>run</goal>
                         </goals>
+                        <configuration>
+                            <protocVersion>${deps.protobuf.version}</protocVersion>
+                            <type>java-shaded</type>
+                            <addProtoSources>all</addProtoSources>
+                            <inputDirectories>
+                                <directory>src/main/resources/protobuf</directory>
+                            </inputDirectories>
+                            <outputTargets>
+                                <outputTarget>
+                                    <type>java</type>
+                                    <outputDirectory>src/main/java</outputDirectory>
+                                </outputTarget>
+                            </outputTargets>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <!-- Đường dẫn tới thư mục chứa file .proto -->
-                    <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
-                    <!-- Đường dẫn để xuất các file .java -->
-                    <outputDirectory>${project.basedir}/src/main/java/it/must/be/funny/protobuf</outputDirectory>
-                </configuration>
+            </plugin>
+
+            <!-- Generate protobuf java classes goal add source -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${deps.codehaus.version}</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${basedir}/target/generated-sources/protobuf</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
