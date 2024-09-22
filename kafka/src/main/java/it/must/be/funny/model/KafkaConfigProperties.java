@@ -5,6 +5,7 @@ public class KafkaConfigProperties {
     private String topicName;
     private String bootstrapServer;
     private int threadPoolSize;
+    private String topicTimeOutData;
 
     public KafkaConfigProperties() {
     }
@@ -48,6 +49,14 @@ public class KafkaConfigProperties {
         this.threadPoolSize = threadPoolSize;
     }
 
+    public String getTopicTimeOutData() {
+        return topicTimeOutData;
+    }
+
+    public void setTopicTimeOutData(String topicTimeOutData) {
+        this.topicTimeOutData = topicTimeOutData;
+    }
+
     @Override
     public String toString() {
         return "KafkaConfigProperties{" +
@@ -55,6 +64,7 @@ public class KafkaConfigProperties {
                 ", topicName='" + topicName + '\'' +
                 ", bootstrapServer='" + bootstrapServer + '\'' +
                 ", threadPoolSize=" + threadPoolSize +
+                ", topicTimeOutData='" + topicTimeOutData + '\'' +
                 '}';
     }
 }
