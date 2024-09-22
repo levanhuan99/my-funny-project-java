@@ -1,0 +1,8 @@
+kafkaConfigProperties:
+  groupId: group_test
+  topicName: first_topic
+  bootstrapServer: localhost:9092
+  threadPoolSize: 10
+  topicTimeOutData: topic_data_expired
+
+cacheCallExpiredTimeMillisec: 10

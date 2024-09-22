@@ -18,20 +18,18 @@ public class KafkaMultiTopicConsumeMain {
 
     public static void main(String[] args) {
         ConfigProperties configProperties = SnakeYmlConfigLoader.loadConfig();
-        final ExecutorService threadProcessData = Executors.newSingleThreadExecutor();
+        final ExecutorService threadProcessData = Executors.newFixedThreadPool(2);
         KafkaProduce kafkaProduce = new KafkaProduce(configProperties.getKafkaConfigProperties().getBootstrapServer());
         KafkaMultiTopicConsumerInterface<String, String> processor = (key, value) -> {
             logger.info(String.format("end of data with key %s and value %s", key, value.toString()));
             kafkaProduce.produce("topic_merge_data", key, value.toString());
-            //produce data
         };
 
         KafkaMultiTopicConsumer kafkaMultiTopicConsumer = new KafkaMultiTopicConsumer<>(processor
-                , configProperties.getKafkaConfigProperties().getBootstrapServer(),
-                configProperties.getKafkaConfigProperties().getTopicName(), 100);
+                ,configProperties, kafkaProduce);
         threadProcessData.submit(
                 () -> {
-                   kafkaMultiTopicConsumer.start("topic_1");
+                   kafkaMultiTopicConsumer.start("topic_1", "topic_2");
                 }
         );
         logger.info("Start Success");

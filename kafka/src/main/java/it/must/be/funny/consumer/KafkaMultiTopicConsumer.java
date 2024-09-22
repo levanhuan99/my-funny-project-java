@@ -6,6 +6,7 @@ import com.github.benmanes.caffeine.cache.RemovalCause;
 import com.github.benmanes.caffeine.cache.RemovalListener;
 import it.must.be.funny.KafkaMultiTopicConsumeMain;
 import it.must.be.funny.config.ConsumerConfig;
+import it.must.be.funny.model.ConfigProperties;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -30,22 +31,33 @@ public class KafkaMultiTopicConsumer<K, V> {
     private final Cache<K, List<V>> messageCache;
     private final ExecutorService threadProcessData;
     private final KafkaMultiTopicConsumerInterface<K, V> messageProcessor;
-    public KafkaMultiTopicConsumer(KafkaMultiTopicConsumerInterface<K, V> messageProcessor, String bootstrapServer, String groupId, int dataTimeout) {
-        this.consumer = new KafkaConsumer<>(ConsumerConfig.getProperties(bootstrapServer, groupId));
+    public KafkaMultiTopicConsumer(KafkaMultiTopicConsumerInterface<K, V> messageProcessor,
+                                   ConfigProperties configProperties,
+                                   KafkaProduce kafkaProduce) {
+        this.consumer = new KafkaConsumer<>(ConsumerConfig.getProperties(
+                configProperties.getKafkaConfigProperties().getBootstrapServer(),
+                configProperties.getKafkaConfigProperties().getGroupId()));
         this.messageCache =  Caffeine.newBuilder()
-                .expireAfterWrite(dataTimeout, TimeUnit.SECONDS) // Tự động loại bỏ sau timeout giây
+                .expireAfterWrite(configProperties.getCacheCallExpiredTimeMillisec(), TimeUnit.SECONDS) // Tự động loại bỏ sau timeout giây
                 .removalListener(new RemovalListener<K, List<V>>() {
                     @Override
-                    public void onRemoval(K key, List<V> messages, RemovalCause cause) {
+                    public void onRemoval(K key, List<V> value, RemovalCause cause) {
                         if (cause == RemovalCause.EXPIRED) {
                             // Xử lý bản tin khi key hết hạn
                             //counter metrics here
-                            logger.info("data timeout");
+                            logger.info(String.format("data timeout: %s ",key.toString()));
+                            if (!value.stream()
+                                    .anyMatch(s -> s.toString().equalsIgnoreCase("end"))){
+
+                                kafkaProduce.produce(
+                                        configProperties.getKafkaConfigProperties().getTopicTimeOutData()
+                                        ,key.toString(), value.toString());
+                            }
                         }
                     }
                 })
                 .build();
-        this.threadProcessData = Executors.newSingleThreadExecutor();
+        this.threadProcessData = Executors.newFixedThreadPool(2);
         this.messageProcessor = messageProcessor;
     }
 
@@ -54,7 +66,7 @@ public class KafkaMultiTopicConsumer<K, V> {
         try {
             while (true) {
                 // Poll dữ liệu từ Kafka
-                ConsumerRecords<K, V> records = consumer.poll(Duration.ofMillis(1000));
+                ConsumerRecords<K, V> records = consumer.poll(Duration.ofMillis(100));
                 // Xử lý dữ liệu từ cả hai topic
                 //sử dụng if else để process dữ liệu khác topic nhau
                 for (ConsumerRecord<K, V> record : records) {
@@ -88,15 +100,14 @@ public class KafkaMultiTopicConsumer<K, V> {
                     //increase counter todo
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(String.format("Exception process message: %s , e: %s",e.getMessage(), e));
                 // Xử lý lỗi nếu có
             }
         });
-
     }
 
     private boolean isEndOfCall(V value){
-        return value.toString().contains("DONE");
+        return value.toString().contains("end");
 
     }
 }
