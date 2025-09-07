@@ -1,0 +1,109 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<Configuration status="warn" monitorInterval="30">-->
+<!--    <Properties>-->
+<!--        &lt;!&ndash; Define variables for log file paths &ndash;&gt;-->
+<!--        <Property name="logDir">logs</Property>-->
+<!--        <Property name="traceLog">trace.log</Property>-->
+<!--        <Property name="debugLog">debug.log</Property>-->
+<!--        <Property name="infoLog">info.log</Property>-->
+<!--        <Property name="warnLog">warn.log</Property>-->
+<!--        <Property name="errorLog">error.log</Property>-->
+<!--    </Properties>-->
+
+<!--    <Appenders>-->
+<!--        <Appender>-->
+
+<!--        </Appender>-->
+<!--        &lt;!&ndash; Console Appender Configuration &ndash;&gt;-->
+<!--        <Console name="Console" target="SYSTEM_OUT">-->
+<!--            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>-->
+<!--        </Console>-->
+
+<!--        &lt;!&ndash; Rolling File Appender for TRACE level &ndash;&gt;-->
+<!--        <RollingFile name="TraceFile" fileName="${logDir}/${traceLog}"-->
+<!--                     filePattern="${logDir}/trace-%d{yyyy-MM-dd}-%i.log.gz">-->
+<!--            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>-->
+<!--            <Policies>-->
+<!--                <TimeBasedTriggeringPolicy />-->
+<!--                <SizeBasedTriggeringPolicy size="10MB" />-->
+<!--            </Policies>-->
+<!--            <DefaultRolloverStrategy max="10"/>-->
+<!--        </RollingFile>-->
+
+<!--        &lt;!&ndash; Rolling File Appender for DEBUG level &ndash;&gt;-->
+<!--        <RollingFile name="DebugFile" fileName="${logDir}/${debugLog}"-->
+<!--                     filePattern="${logDir}/debug-%d{yyyy-MM-dd}-%i.log.gz">-->
+<!--            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>-->
+<!--            <Policies>-->
+<!--                <TimeBasedTriggeringPolicy />-->
+<!--                <SizeBasedTriggeringPolicy size="10MB" />-->
+<!--            </Policies>-->
+<!--            <DefaultRolloverStrategy max="10"/>-->
+<!--        </RollingFile>-->
+
+<!--        &lt;!&ndash; Rolling File Appender for INFO level &ndash;&gt;-->
+<!--        <RollingFile name="InfoFile" fileName="${logDir}/${infoLog}"-->
+<!--                     filePattern="${logDir}/info-%d{yyyy-MM-dd}-%i.log.gz">-->
+<!--            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>-->
+<!--            <Policies>-->
+<!--                <TimeBasedTriggeringPolicy />-->
+<!--                <SizeBasedTriggeringPolicy size="10MB" />-->
+<!--            </Policies>-->
+<!--            <DefaultRolloverStrategy max="10"/>-->
+<!--        </RollingFile>-->
+
+<!--        &lt;!&ndash; Rolling File Appender for WARN level &ndash;&gt;-->
+<!--        <RollingFile name="WarnFile" fileName="${logDir}/${warnLog}"-->
+<!--                     filePattern="${logDir}/warn-%d{yyyy-MM-dd}-%i.log.gz">-->
+<!--            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>-->
+<!--            <Policies>-->
+<!--                <TimeBasedTriggeringPolicy />-->
+<!--                <SizeBasedTriggeringPolicy size="10MB" />-->
+<!--            </Policies>-->
+<!--            <DefaultRolloverStrategy max="10"/>-->
+<!--        </RollingFile>-->
+
+<!--        &lt;!&ndash; Rolling File Appender for ERROR level &ndash;&gt;-->
+<!--        <RollingFile name="ErrorFile" fileName="${logDir}/${errorLog}"-->
+<!--                     filePattern="${logDir}/error-%d{yyyy-MM-dd}-%i.log.gz">-->
+<!--            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>-->
+<!--            <Policies>-->
+<!--                <TimeBasedTriggeringPolicy />-->
+<!--                <SizeBasedTriggeringPolicy size="10MB" />-->
+<!--            </Policies>-->
+<!--            <DefaultRolloverStrategy max="10"/>-->
+<!--        </RollingFile>-->
+<!--    </Appenders>-->
+
+<!--    <Loggers>-->
+<!--        &lt;!&ndash; Root Logger Configuration &ndash;&gt;-->
+<!--        <Root level="trace">-->
+<!--            <AppenderRef ref="STDOUT"/>-->
+<!--        </Root>-->
+
+<!--        &lt;!&ndash; Logger for TRACE level &ndash;&gt;-->
+<!--        <Logger name="it.must.be.funny" level="trace" additivity="false">-->
+<!--            <AppenderRef ref="TraceFile"/>-->
+<!--        </Logger>-->
+
+<!--        &lt;!&ndash; Logger for DEBUG level &ndash;&gt;-->
+<!--        <Logger name="it.must.be.funny" level="debug" additivity="false">-->
+<!--            <AppenderRef ref="DebugFile"/>-->
+<!--        </Logger>-->
+
+<!--        &lt;!&ndash; Logger for INFO level &ndash;&gt;-->
+<!--        <Logger name="it.must.be.funny" level="info" additivity="false">-->
+<!--            <AppenderRef ref="InfoFile"/>-->
+<!--        </Logger>-->
+
+<!--        &lt;!&ndash; Logger for WARN level &ndash;&gt;-->
+<!--        <Logger name="it.must.be.funny" level="warn" additivity="false">-->
+<!--            <AppenderRef ref="WarnFile"/>-->
+<!--        </Logger>-->
+
+<!--        &lt;!&ndash; Logger for ERROR level &ndash;&gt;-->
+<!--        <Logger name="it.must.be.funny" level="error" additivity="false">-->
+<!--            <AppenderRef ref="ErrorFile"/>-->
+<!--        </Logger>-->
+<!--    </Loggers>-->
+<!--</Configuration>-->

@@ -1,4 +1,4 @@
-package it.must.be.funny.consumer;
+package it.must.be.funny.produce;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
